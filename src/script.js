@@ -17,6 +17,7 @@ fetch(url)
 // - создаем тэг элемента списка
 // - присваиваем ему имя класса,подключаем свойство быть перемещаемым(draggable), содержимым является имя пользователя, пришедшее с сервера
 // - говорим, что родительским элементом li является элемент с id == users__list, т.е. наш тэг ul
+// - вызываем ыункцию, добавляющую всплывающее окно с информацией о пользователе
 // - последнее действие это добавление функции, которая обрабатывает события при перемещении элемента, на вход подаём родительский элемент
 const renderItems = (data) => {
   data.map((user) => {
@@ -28,6 +29,7 @@ const renderItems = (data) => {
 
     ul.appendChild(li);
 
+    addPopupInfo(user, li);
     addDragEventListeners(ul);
   });
 };
@@ -68,4 +70,25 @@ const addDragEventListeners = (listElement) => {
     // ниже происходит вставка нашего перемещаемого элемента перед вычисленным объектом
     listElement.insertBefore(activeElement, nextElement);
   });
+};
+//на добавление всплывающего окна использовала не атрибут innerText, а innerHTML, так как посчитала, что в данном случае будет удобней.
+// КАк и в случае li, создаем тэг span, которому присваиваем имя класса, и внутрь него помещаем html с данными пользователя
+// Также добавляем события на перемещение мыши: при нахождении курсора на элементе списка показываем доп. информацию, при нахождении вне элемента - скрываем информацию
+const addPopupInfo = (user, li) => {
+  let span = document.createElement("span");
+  span.className = "users__info";
+  span.innerHTML += `
+    <p>USERNAME:</p>
+    ${user.username}<br/>
+    <p>EMAIL:</p>
+    ${user.email}<br/>
+    <p>ADDRESS:</p>
+    ${user.address.city} city<br/>
+    ${user.address.street} street<br/>
+    ${user.address.suite} <br/>
+  `;
+  li.addEventListener("mouseover", () => span.classList.add("show"));
+  li.addEventListener("mouseout", () => span.classList.remove("show"));
+
+  li.appendChild(span);
 };

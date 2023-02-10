@@ -43,6 +43,28 @@ ul {
   background-color: #2b3849;
   transition: background-color 0.5s;
 }
+.container .users__item .users__info {
+  visibility: hidden;
+  width: 250px;
+  overflow-wrap: break-word;
+  background-color: #52515e;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  left: 220px;
+}
+.container .users__item .users__info.show {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+.container .users__item .users__info p {
+  padding: 0;
+  margin: 0;
+  color: #f472b6;
+  font-weight: bold;
+}
 .container .users__item:hover {
   background-color: #405777;
 }
