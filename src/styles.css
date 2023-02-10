@@ -4,14 +4,6 @@ body {
   padding: 0;
 }
 
-body {
-  font-family: "Tahoma", sans-serif;
-  font-size: 18px;
-  line-height: 25px;
-  color: #ffffff;
-  background-color: #111827;
-}
-
 ul {
   margin: 40px 0 0 0;
   padding: 0;
@@ -21,17 +13,32 @@ ul {
   list-style-type: none;
 }
 
-.container {
-  width: 600px;
+div {
+  height: 100vh;
+  font-family: "Tahoma", sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+  color: #ffffff;
+  background-color: #111827;
+  display: flex;
+  align-items: center;
+}
+div .container {
+  width: 400px;
+  height: -moz-max-content;
+  height: max-content;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: 50px 40px;
+  border: 13px double #f472b6;
+  border-radius: 30px;
 }
-.container .users__title {
-  margin: 80px 0 20px 0;
+div .container .users__title {
+  margin: 20px 0 20px 0;
   text-align: center;
 }
-.container .users__item {
+div .container .users__item {
   position: relative;
   min-width: 200px;
   max-width: 250px;
@@ -43,7 +50,7 @@ ul {
   background-color: #2b3849;
   transition: background-color 0.5s;
 }
-.container .users__item .users__info {
+div .container .users__item .users__info {
   visibility: hidden;
   width: 250px;
   overflow-wrap: break-word;
@@ -55,19 +62,19 @@ ul {
   position: absolute;
   left: 220px;
 }
-.container .users__item .users__info.show {
+div .container .users__item .users__info.show {
   visibility: visible;
   animation: fadeIn 1s;
 }
-.container .users__item .users__info p {
+div .container .users__item .users__info p {
   padding: 0;
   margin: 0;
   color: #f472b6;
   font-weight: bold;
 }
-.container .users__item:hover {
+div .container .users__item:hover {
   background-color: #405777;
 }
-.container .selected {
+div .container .selected {
   opacity: 0.6;
 }/*# sourceMappingURL=styles.css.map */

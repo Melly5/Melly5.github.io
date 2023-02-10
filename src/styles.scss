@@ -3,13 +3,6 @@ body {
   margin: 0;
   padding: 0;
 }
-body {
-  font-family: "Tahoma", sans-serif;
-  font-size: 18px;
-  line-height: 25px;
-  color: #ffffff;
-  background-color: #111827;
-}
 
 ul {
   margin: 40px 0 0 0;
@@ -20,60 +13,73 @@ ul {
   list-style-type: none;
 }
 
-.container {
-  width: 600px;
+div {
+  height: 100vh;
+  font-family: "Tahoma", sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+  color: #ffffff;
+  background-color: #111827;
   display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-
-  .users__title {
-    margin: 80px 0 20px 0;
-    text-align: center;
-  }
-
-  .users__item {
-    position: relative;
-    min-width: 200px;
-    max-width: 250px;
-    margin-bottom: 10px;
-    padding: 8px;
-    text-align: center;
-    border-radius: 8px;
-    cursor: move;
-    background-color: #2b3849;
-    transition: background-color 0.5s;
-
-    .users__info {
-      visibility: hidden;
-      width: 250px;
-      overflow-wrap: break-word;
-      background-color: #52515e;
-      color: #fff;
+  align-items: center;
+  .container {
+    width: 400px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 50px 40px;
+    border: 13px double #f472b6;
+    border-radius: 30px;
+    .users__title {
+      margin: 20px 0 20px 0;
       text-align: center;
-      border-radius: 6px;
-      padding: 8px 0;
-      position: absolute;
-      left: 220px;
+    }
 
-      &.show {
-        visibility: visible;
-        -webkit-animation: fadeIn 1s;
-        animation: fadeIn 1s;
-      }
+    .users__item {
+      position: relative;
+      min-width: 200px;
+      max-width: 250px;
+      margin-bottom: 10px;
+      padding: 8px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: move;
+      background-color: #2b3849;
+      transition: background-color 0.5s;
 
-      p {
-        padding: 0;
-        margin: 0;
-        color: #f472b6;
-        font-weight: bold;
+      .users__info {
+        visibility: hidden;
+        width: 250px;
+        overflow-wrap: break-word;
+        background-color: #52515e;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        left: 220px;
+
+        &.show {
+          visibility: visible;
+          -webkit-animation: fadeIn 1s;
+          animation: fadeIn 1s;
+        }
+
+        p {
+          padding: 0;
+          margin: 0;
+          color: #f472b6;
+          font-weight: bold;
+        }
       }
     }
-  }
-  .users__item:hover {
-    background-color: #405777;
-  }
+    .users__item:hover {
+      background-color: #405777;
+    }
 
-  .selected {
-    opacity: 0.6;
+    .selected {
+      opacity: 0.6;
+    }
   }
 }
