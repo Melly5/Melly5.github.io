@@ -36,8 +36,12 @@ const renderItems = (data) => {
 
 const addDragEventListeners = (listElement) => {
   //если начинаем двигать элемент, ему присваивается класс selected
+  // + скрываем всплывающее окно, чтобы оно не мешало при перетаскивании
   listElement.addEventListener("dragstart", (event) => {
     event.target.classList.add(`selected`);
+
+    let children = event.target.childNodes;
+    children[1].classList.remove(`show`);
   });
 
   //отпускаем элемент - удаляем класс selected

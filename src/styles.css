@@ -51,7 +51,7 @@ div .container .users__item {
   transition: background-color 0.5s;
 }
 div .container .users__item .users__info {
-  visibility: hidden;
+  display: none;
   width: 250px;
   overflow-wrap: break-word;
   background-color: #52515e;
@@ -63,7 +63,7 @@ div .container .users__item .users__info {
   left: 220px;
 }
 div .container .users__item .users__info.show {
-  visibility: visible;
+  display: block;
   animation: fadeIn 1s;
 }
 div .container .users__item .users__info p {
