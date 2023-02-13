@@ -1,3 +1,8 @@
+$background-color: #111827;
+$primary-color: #2b3849;
+$secondary-color: #52515e;
+$border-color: #f472b6;
+
 html,
 body {
   margin: 0;
@@ -19,8 +24,7 @@ div {
   font-size: 18px;
   line-height: 25px;
   color: #ffffff;
-  background-color: #111827;
-  display: flex;
+  background-color: $background-color;
   align-items: center;
   .container {
     width: 400px;
@@ -29,7 +33,7 @@ div {
     flex-direction: column;
     margin: 0 auto;
     padding: 50px 40px;
-    border: 13px double #f472b6;
+    border: 13px double $border-color;
     border-radius: 30px;
     .users__title {
       margin: 20px 0 20px 0;
@@ -45,14 +49,14 @@ div {
       text-align: center;
       border-radius: 8px;
       cursor: move;
-      background-color: #2b3849;
+      background-color: $primary-color;
       transition: background-color 0.5s;
 
       .users__info {
         display: none;
         width: 250px;
         overflow-wrap: break-word;
-        background-color: #52515e;
+        background-color: $secondary-color;
         color: #fff;
         text-align: center;
         border-radius: 6px;
@@ -69,17 +73,19 @@ div {
         p {
           padding: 0;
           margin: 0;
-          color: #f472b6;
+          color: $border-color;
           font-weight: bold;
         }
       }
     }
     .users__item:hover {
-      background-color: #405777;
+      background-color: lighten($primary-color, 20%);
     }
 
     .selected {
       opacity: 0.6;
     }
   }
+
+  
 }
