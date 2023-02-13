@@ -1,11 +1,13 @@
-const usersList = document.getElementById("users__list");
 const url = "https://jsonplaceholder.typicode.com/users";
 
+const usersList = document.getElementById("users__list");
+let activeAmount = document.getElementsByClassName("display");
 let pagination = document.querySelector("#pagination");
 let active,
+  activeA,
   paginationItems = [],
   users = [],
-  notesOnPage = 3,
+  notesOnPage,
   countOfItems = 0;
 
 //по url делаем запрос, приводим ответ к формату json, затем ответ обрабатывается функцией renderItems
@@ -13,10 +15,66 @@ let active,
 const fetchData = async () => {
   const promise = fetch(url);
   const data = await promise;
-  renderListItems(await data.json());
+
+  renderItems(await data.json());
 };
 
 fetchData();
+
+//будущая функция выбора количества элементов на странице
+const setActiveAmount = () => {};
+
+setActiveAmount();
+
+//изначальная функция, которая подсчитывает данные и вызываем функцию отрисоки номеров страниц
+const renderItems = (data) => {
+  users = data;
+  notesOnPage = document.getElementsByClassName("display active")[0].innerHTML; //считываем количество элементов на странице
+  countOfItems = Math.ceil(users.length / notesOnPage); //подсчитываем количество страниц
+  sliceItems(1); //начальное отображение первой страницы
+
+  renderPaginationItems(countOfItems);
+};
+
+// функция отрисовки номеров страниц, на нажатие номеров навешиваем функцию showPage
+const renderPaginationItems = (countOfItems) => {
+  if (countOfItems == 1) return; //если все элементы помещаются на одну страницу - не отрисовываем
+
+  for (let i = 1; i <= countOfItems; i++) {
+    let li = document.createElement("li");
+    i === 1 && li.classList.add("active"); // по умолчанию - первая страница активна
+    i === 1 && (active = li);
+    li.innerHTML = i;
+    pagination.appendChild(li);
+    paginationItems.push(li);
+  }
+
+  paginationItems.map((item) =>
+    item.addEventListener("click", () => {
+      showPage(item);
+    })
+  );
+};
+
+//меняем активный номер страницы и вызываем функцию подсчета и отрисовки элементов
+const showPage = (item) => {
+  active && active.classList.remove("active");
+
+  active = item;
+
+  item.classList.add("active");
+
+  let pageNum = +item.innerHTML;
+  sliceItems(pageNum);
+};
+// по номеру страницы отсчитываем начальный и конечный элемент этой страницы и вызываем функцию отрисовки
+const sliceItems = (pageNum) => {
+  let start = (pageNum - 1) * notesOnPage;
+  let end = Number(start) + Number(notesOnPage);
+  let usersSlice = users.slice(start, end);
+  usersList.innerHTML = "";
+  renderListItems(usersSlice);
+};
 
 //функция рендера компонентов списка с данными с сервера:
 // - создаем тэг элемента списка
@@ -36,33 +94,6 @@ const renderListItems = (data) => {
     addPopupInfo(user, li);
     addDragEventListeners(usersList);
   });
-
-  countOfItems = Math.ceil(data.length / notesOnPage);
-
-  renderPaginationItems(countOfItems);
-};
-
-const renderPaginationItems = (countOfItems) => {
-  for (let i = 1; i <= countOfItems; i++) {
-    let li = document.createElement("li");
-    li.innerHTML = i;
-    pagination.appendChild(li);
-    paginationItems.push(li);
-  }
-
-  paginationItems.map((item) =>
-    item.addEventListener("click", () => {
-      showPage(item);
-    })
-  );
-};
-
-const showPage = (item) => {
-  active && active.classList.remove("active");
-
-  active = item;
-
-  item.classList.add("active");
 };
 
 const addDragEventListeners = (listElement) => {
@@ -108,7 +139,7 @@ const addDragEventListeners = (listElement) => {
 };
 
 //на добавление всплывающего окна использовала не атрибут innerText, а innerHTML, так как посчитала, что в данном случае будет удобней.
-// КАк и в случае li, создаем тэг span, которому присваиваем имя класса, и внутрь него помещаем html с данными пользователя
+// Как и в случае li, создаем тэг span, которому присваиваем имя класса, и внутрь него помещаем html с данными пользователя
 // Также добавляем события на перемещение мыши: при нахождении курсора на элементе списка показываем доп. информацию, при нахождении вне элемента - скрываем информацию
 const addPopupInfo = (user, li) => {
   let span = document.createElement("span");

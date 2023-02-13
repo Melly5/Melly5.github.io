@@ -3,13 +3,12 @@ $primary-color: #2b3849;
 $secondary-color: #52515e;
 $border-color: #f472b6;
 
-html,
-body {
+* {
   margin: 0;
   padding: 0;
 }
 
-div {
+.main__container {
   height: 100vh;
   font-family: "Tahoma", sans-serif;
   font-size: 18px;
@@ -17,7 +16,7 @@ div {
   color: #ffffff;
   background-color: $background-color;
   align-items: center;
-  .container {
+  .users__container {
     width: 400px;
     height: max-content;
     display: flex;
@@ -70,8 +69,6 @@ div {
           }
 
           p {
-            padding: 0;
-            margin: 0;
             color: $border-color;
             font-weight: bold;
           }
@@ -96,6 +93,25 @@ div {
       border-radius: 5px;
       background-color: $primary-color;
 
+      &:hover,
+      &.active {
+        cursor: pointer;
+        background-color: lighten($primary-color, 7%);
+        color: $border-color;
+        border: 1px solid $border-color;
+      }
+    }
+  }
+  .users__display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    span {
+      margin: 0 7px;
+      padding: 5px 10px;
+      background-color: $primary-color;
+      border-radius: 6px;
       &:hover,
       &.active {
         cursor: pointer;
