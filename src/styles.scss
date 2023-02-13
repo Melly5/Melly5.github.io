@@ -9,15 +9,6 @@ body {
   padding: 0;
 }
 
-ul {
-  margin: 40px 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style-type: none;
-}
-
 div {
   height: 100vh;
   font-family: "Tahoma", sans-serif;
@@ -40,52 +31,78 @@ div {
       text-align: center;
     }
 
-    .users__item {
-      position: relative;
-      min-width: 200px;
-      max-width: 250px;
-      margin-bottom: 10px;
-      padding: 8px;
-      text-align: center;
-      border-radius: 8px;
-      cursor: move;
-      background-color: $primary-color;
-      transition: background-color 0.5s;
+    ul {
+      margin: 40px 0 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      list-style-type: none;
 
-      .users__info {
-        display: none;
-        width: 250px;
-        overflow-wrap: break-word;
-        background-color: $secondary-color;
-        color: #fff;
+      .users__item {
+        position: relative;
+        min-width: 200px;
+        max-width: 250px;
+        margin-bottom: 10px;
+        padding: 8px;
         text-align: center;
-        border-radius: 6px;
-        padding: 8px 0;
-        position: absolute;
-        left: 220px;
+        border-radius: 8px;
+        cursor: move;
+        background-color: $primary-color;
+        transition: background-color 0.5s;
 
-        &.show {
-          display: block;
-          -webkit-animation: fadeIn 1s;
-          animation: fadeIn 1s;
+        .users__info {
+          display: none;
+          width: 250px;
+          overflow-wrap: break-word;
+          background-color: $secondary-color;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 8px 0;
+          position: absolute;
+          left: 220px;
+
+          &.show {
+            display: block;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+          }
+
+          p {
+            padding: 0;
+            margin: 0;
+            color: $border-color;
+            font-weight: bold;
+          }
         }
-
-        p {
-          padding: 0;
-          margin: 0;
-          color: $border-color;
-          font-weight: bold;
+        &:hover {
+          background-color: lighten($primary-color, 20%);
         }
       }
     }
-    .users__item:hover {
-      background-color: lighten($primary-color, 20%);
-    }
-
-    .selected {
-      opacity: 0.6;
-    }
   }
 
-  
+  #pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin-right: 7px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: $primary-color;
+
+      &:hover,
+      &.active {
+        cursor: pointer;
+        background-color: lighten($primary-color, 7%);
+        color: $border-color;
+        border: 1px solid $border-color;
+      }
+    }
+  }
 }
