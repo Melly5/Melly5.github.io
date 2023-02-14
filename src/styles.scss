@@ -131,4 +131,24 @@ $border-color: #f472b6;
       }
     }
   }
+
+  .sort__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    span {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background-color: $primary-color;
+      &.disable {
+      }
+      &:hover, &.active {
+        cursor: pointer;
+        background-color: lighten($primary-color, 7%);
+        border: 1px solid $border-color;
+      }
+    }
+  }
 }

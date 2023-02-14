@@ -114,4 +114,21 @@
   background-color: #38495f;
   color: #f472b6;
   border: 1px solid #f472b6;
+}
+.main__container .sort__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.main__container .sort__container span {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: #2b3849;
+}
+.main__container .sort__container span:hover, .main__container .sort__container span.active {
+  cursor: pointer;
+  background-color: #38495f;
+  border: 1px solid #f472b6;
 }/*# sourceMappingURL=styles.css.map */

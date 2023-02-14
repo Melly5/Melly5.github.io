@@ -7,48 +7,22 @@ let activePage,
   activeAmount,
   amountItems = [],
   paginationItems = [],
+  sortItems = [],
   users = [],
+  usersSlice = [],
   notesOnPage = 10,
   countOfItems = 0;
-
-//данной функцией для объектов выбора количества элементов в списке добавляем обработчик события при нажатии -
-//вызывается функция смены стиля активной кнопки и перерендер спсика
-const setActiveAmount = () => {
-  var objects = document.getElementsByClassName("display");
-  for (var obj of objects) {
-    amountItems.push(obj);
-  }
-  amountItems.map((item) => {
-    item.classList.contains("active") && (activeAmount = item);
-    item.addEventListener("click", () => {
-      displayPage(item);
-    });
-  });
-};
-
-const displayPage = (item) => {
-  activeAmount && activeAmount.classList.remove("active");
-
-  activeAmount = item;
-
-  item.classList.add("active");
-
-  notesOnPage = item.innerHTML; //считываем количество элементов списка
-  renderItems(users); //отрисовываем с новыми параметрами
-};
 
 //по url делаем запрос, приводим ответ к формату json, затем ответ обрабатывается функцией renderItems
 const fetchData = async () => {
   const promise = fetch(url);
   const data = await promise;
-
-  renderItems(await data.json());
+  users = await data.json();
+  renderItems(users);
 };
 
 //изначальная функция, которая подсчитывает данные и вызываем функцию отрисоки номеров страниц
-const renderItems = (data) => {
-  users = data;
-
+const renderItems = (users) => {
   countOfItems = Math.ceil(users.length / notesOnPage); //подсчитываем количество страниц
 
   sliceItems(1); //начальное отображение первой страницы
@@ -98,13 +72,12 @@ const showPage = (item) => {
   let pageNum = +item.innerHTML;
   sliceItems(pageNum);
 };
+
 // по номеру страницы отсчитываем начальный и конечный элемент этой страницы и вызываем функцию отрисовки
 const sliceItems = (pageNum) => {
   let start = (pageNum - 1) * notesOnPage;
   let end = Number(start) + Number(notesOnPage);
-  let usersSlice = users.slice(start, end);
-  usersList.innerHTML = "";
-
+  usersSlice = users.slice(start, end);
   renderListItems(usersSlice);
 };
 
@@ -115,6 +88,8 @@ const sliceItems = (pageNum) => {
 // - вызываем ыункцию, добавляющую всплывающее окно с информацией о пользователе
 // - последнее действие это добавление функции, которая обрабатывает события при перемещении элемента, на вход подаём родительский элемент
 const renderListItems = (data) => {
+  usersList.innerHTML = "";
+
   data.map((user) => {
     let li = document.createElement("li");
     li.className = "users__item";
@@ -192,5 +167,73 @@ const addPopupInfo = (user, li) => {
   li.appendChild(span);
 };
 
+//данной функцией для объектов выбора количества элементов в списке добавляем обработчик события при нажатии
+const setActiveAmount = () => {
+  var objects = document.getElementsByClassName("display");
+  for (var obj of objects) {
+    amountItems.push(obj);
+  }
+  amountItems.map((item) => {
+    item.classList.contains("active") && (activeAmount = item);
+    item.addEventListener("click", () => {
+      displayPage(item);
+    });
+  });
+};
+
+//вызывается функция смены стиля активной кнопки и перерендер спиcка
+const displayPage = (item) => {
+  activeAmount && activeAmount.classList.remove("active");
+
+  activeAmount = item;
+
+  item.classList.add("active");
+
+  notesOnPage = item.innerHTML; //считываем количество элементов списка
+  renderItems(users); //отрисовываем с новыми параметрами
+};
+
+//добавляем каждой из кнопок сортировки обработчики событий при нажатии
+const setActiveSort = () => {
+  var objects = document.getElementsByClassName("sort");
+  for (var obj of objects) {
+    sortItems.push(obj);
+  }
+  sortItems[0].addEventListener("click", () => {
+    sortArrayByName(usersSlice);
+  });
+  sortItems[1].addEventListener("click", () => {
+    sortArrayByEmail(usersSlice);
+  });
+  sortItems[2].addEventListener("click", () => {
+    renderListItems(usersSlice);
+  });
+};
+
+//сортировка по имени
+const sortArrayByName = (users) => {
+  let sorted = JSON.parse(JSON.stringify(users));
+  //глубокое копирование объекта, чтобы не менять массив usersSlice
+  sorted = sorted.sort(byField("name"));
+
+  renderListItems(sorted);
+};
+
+//сортировка по почте
+const sortArrayByEmail = (users) => {
+  //глубокое копирование объекта, чтобы не менять массив usersSlice
+  let sorted = JSON.parse(JSON.stringify(users));
+
+  sorted = sorted.sort(byField("email"));
+
+  renderListItems(sorted);
+};
+
+//сортировка по параметру
+const byField = (field) => {
+  return (a, b) => (a[field] > b[field] ? 1 : -1);
+};
+
 fetchData();
 setActiveAmount();
+setActiveSort();
