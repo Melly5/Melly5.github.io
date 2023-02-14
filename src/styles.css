@@ -5,12 +5,12 @@
 
 .main__container {
   height: 100vh;
+  align-items: center;
   font-family: "Tahoma", sans-serif;
   font-size: 18px;
   line-height: 25px;
   color: #ffffff;
   background-color: #111827;
-  align-items: center;
 }
 .main__container .users__container {
   width: 400px;
@@ -70,38 +70,46 @@
 .main__container .users__container ul .users__item:hover {
   background-color: #516989;
 }
-.main__container #pagination {
+.main__container .display__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.main__container .display__container span {
+  margin: 0 7px;
+  padding: 5px 10px;
+  background-color: #2b3849;
+  border-radius: 6px;
+}
+.main__container .display__container span:hover, .main__container .display__container span.active {
+  cursor: pointer;
+  background-color: #38495f;
+  color: #f472b6;
+  border: 1px solid #f472b6;
+}
+.main__container .pagination__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main__container .pagination__container p {
+  margin: 0 10px;
+}
+.main__container .pagination__container #pagination {
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 0;
   list-style-type: none;
 }
-.main__container #pagination li {
+.main__container .pagination__container #pagination li {
   margin-right: 7px;
   padding: 10px;
   border-radius: 5px;
   background-color: #2b3849;
 }
-.main__container #pagination li:hover, .main__container #pagination li.active {
-  cursor: pointer;
-  background-color: #38495f;
-  color: #f472b6;
-  border: 1px solid #f472b6;
-}
-.main__container .users__display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-}
-.main__container .users__display span {
-  margin: 0 7px;
-  padding: 5px 10px;
-  background-color: #2b3849;
-  border-radius: 6px;
-}
-.main__container .users__display span:hover, .main__container .users__display span.active {
+.main__container .pagination__container #pagination li:hover, .main__container .pagination__container #pagination li.active {
   cursor: pointer;
   background-color: #38495f;
   color: #f472b6;

@@ -10,12 +10,13 @@ $border-color: #f472b6;
 
 .main__container {
   height: 100vh;
+  align-items: center;
   font-family: "Tahoma", sans-serif;
   font-size: 18px;
   line-height: 25px;
   color: #ffffff;
   background-color: $background-color;
-  align-items: center;
+
   .users__container {
     width: 400px;
     height: max-content;
@@ -80,29 +81,7 @@ $border-color: #f472b6;
     }
   }
 
-  #pagination {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 0;
-    list-style-type: none;
-
-    li {
-      margin-right: 7px;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: $primary-color;
-
-      &:hover,
-      &.active {
-        cursor: pointer;
-        background-color: lighten($primary-color, 7%);
-        color: $border-color;
-        border: 1px solid $border-color;
-      }
-    }
-  }
-  .users__display {
+  .display__container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,6 +97,37 @@ $border-color: #f472b6;
         background-color: lighten($primary-color, 7%);
         color: $border-color;
         border: 1px solid $border-color;
+      }
+    }
+  }
+
+  .pagination__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      margin: 0 10px;
+    }
+    #pagination {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 0;
+      list-style-type: none;
+
+      li {
+        margin-right: 7px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: $primary-color;
+
+        &:hover,
+        &.active {
+          cursor: pointer;
+          background-color: lighten($primary-color, 7%);
+          color: $border-color;
+          border: 1px solid $border-color;
+        }
       }
     }
   }

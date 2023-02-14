@@ -1,13 +1,14 @@
 const url = "https://jsonplaceholder.typicode.com/users";
 
 const usersList = document.getElementById("users__list");
-let activeAmount = document.getElementsByClassName("display");
 let pagination = document.querySelector("#pagination");
-let active,
-  activeA,
+
+let activePage,
+  amountElements = [],
+  activeAmount,
   paginationItems = [],
   users = [],
-  notesOnPage,
+  notesOnPage = 10,
   countOfItems = 0;
 
 //по url делаем запрос, приводим ответ к формату json, затем ответ обрабатывается функцией renderItems
@@ -22,24 +23,51 @@ const fetchData = async () => {
 fetchData();
 
 //будущая функция выбора количества элементов на странице
-const setActiveAmount = () => {};
-
+const setActiveAmount = () => {
+  var objects = document.getElementsByClassName("display");
+  for (var obj of objects) {
+    amountElements.push(obj);
+  }
+  amountElements.map((item) => {
+    item.classList.contains("active") && (activeAmount = item);
+    item.addEventListener("click", () => {
+      showOne(item);
+    });
+  });
+};
 setActiveAmount();
+
+const showOne = (item) => {
+  activeAmount && activeAmount.classList.remove("active");
+
+  activeAmount = item;
+
+  item.classList.add("active");
+  notesOnPage = item.innerHTML;
+  fetchData();
+};
 
 //изначальная функция, которая подсчитывает данные и вызываем функцию отрисоки номеров страниц
 const renderItems = (data) => {
   users = data;
-  notesOnPage = document.getElementsByClassName("display active")[0].innerHTML; //считываем количество элементов на странице
+  //  notesOnPage = document.getElementsByClassName("display active")[0].innerHTML; //считываем количество элементов на странице
   countOfItems = Math.ceil(users.length / notesOnPage); //подсчитываем количество страниц
+  console.log(countOfItems);
   sliceItems(1); //начальное отображение первой страницы
-
   renderPaginationItems(countOfItems);
 };
 
 // функция отрисовки номеров страниц, на нажатие номеров навешиваем функцию showPage
 const renderPaginationItems = (countOfItems) => {
-  if (countOfItems == 1) return; //если все элементы помещаются на одну страницу - не отрисовываем
-
+  pagination.innerHTML = "";
+  if (countOfItems === 1) {
+    document.getElementsByClassName("pagination__container")[0].style.display =
+      "none";
+    return;
+  }
+  //если все элементы помещаются на одну страницу - не отрисовываем
+  document.getElementsByClassName("pagination__container")[0].style.display =
+    "flex";
   for (let i = 1; i <= countOfItems; i++) {
     let li = document.createElement("li");
     i === 1 && li.classList.add("active"); // по умолчанию - первая страница активна
@@ -73,6 +101,7 @@ const sliceItems = (pageNum) => {
   let end = Number(start) + Number(notesOnPage);
   let usersSlice = users.slice(start, end);
   usersList.innerHTML = "";
+  console.log(usersSlice);
   renderListItems(usersSlice);
 };
 
