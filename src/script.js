@@ -19,6 +19,7 @@ const fetchData = async () => {
   const promise = fetch(url);
   const data = await promise;
   users = await data.json();
+
   renderItems(users);
 };
 
@@ -27,6 +28,7 @@ const renderItems = (users) => {
   countOfItems = Math.ceil(users.length / notesOnPage); //подсчитываем количество страниц
 
   sliceItems(1); //начальное отображение первой страницы
+
   renderPaginationItems(countOfItems);
 };
 
@@ -65,9 +67,7 @@ const renderPaginationItems = (countOfItems) => {
 //меняем активный номер страницы и вызываем функцию подсчета и отрисовки элементов
 const showPage = (item) => {
   activePage && activePage.classList.remove("active");
-
   activePage = item;
-
   item.classList.add("active");
 
   let pageNum = +item.innerHTML;
@@ -78,7 +78,9 @@ const showPage = (item) => {
 const sliceItems = (pageNum) => {
   let start = (pageNum - 1) * notesOnPage;
   let end = Number(start) + Number(notesOnPage);
+
   usersSlice = users.slice(start, end);
+
   renderListItems(usersSlice);
 };
 
@@ -146,7 +148,7 @@ const addDragEventListeners = (listElement) => {
   });
 };
 
-//на добавление всплывающего окна использовала не атрибут innerText, а innerHTML, так как посчитала, что в данном случае будет удобней.
+//На добавление всплывающего окна использовала не атрибут innerText, а innerHTML, так как посчитала, что в данном случае будет удобней.
 // Как и в случае li, создаем тэг span, которому присваиваем имя класса, и внутрь него помещаем html с данными пользователя
 // Также добавляем события на перемещение мыши: при нахождении курсора на элементе списка показываем доп. информацию, при нахождении вне элемента - скрываем информацию
 const addPopupInfo = (user, li) => {
@@ -171,9 +173,11 @@ const addPopupInfo = (user, li) => {
 //данной функцией для объектов выбора количества элементов в списке добавляем обработчик события при нажатии
 const setActiveAmount = () => {
   var objects = document.getElementsByClassName("display");
+
   for (var obj of objects) {
     amountItems.push(obj);
   }
+
   amountItems.map((item) => {
     item.classList.contains("active") && (activeAmount = item);
     item.addEventListener("click", () => {
@@ -185,43 +189,50 @@ const setActiveAmount = () => {
 //вызывается функция смены стиля активной кнопки и перерендер спиcка
 const displayPage = (item) => {
   activeAmount && activeAmount.classList.remove("active");
-
   activeAmount = item;
-
   item.classList.add("active");
 
   notesOnPage = item.innerHTML; //считываем количество элементов списка
+
   renderItems(users); //отрисовываем с новыми параметрами
 };
 
 //добавляем каждой из кнопок сортировки обработчики событий при нажатии
 const setActiveSort = () => {
   var objects = document.getElementsByClassName("sort");
+
   for (var obj of objects) {
     sortItems.push(obj);
   }
+
   sortItems[0].addEventListener("click", () => {
-    sortArrayByName(usersSlice);
-    sortItems[0].classList.add("active");
     activeSort && activeSort.classList.remove("active");
 
     activeSort = sortItems[0];
 
     sortItems[0].classList.add("active");
     sortItems[2].classList.remove("disable");
+
+    sortArrayByName(usersSlice);
   });
+
   sortItems[1].addEventListener("click", () => {
-    sortArrayByEmail(usersSlice);
     activeSort && activeSort.classList.remove("active");
 
     activeSort = sortItems[1];
 
     sortItems[1].classList.add("active");
     sortItems[2].classList.remove("disable");
+
+    sortArrayByEmail(usersSlice);
   });
+
   sortItems[2].addEventListener("click", () => {
-    renderListItems(usersSlice);
     sortItems[2].classList.add("disable");
+    sortItems[0].classList.remove("active");
+    sortItems[1].classList.remove("active");
+
+    renderListItems(usersSlice);
   });
 };
 
