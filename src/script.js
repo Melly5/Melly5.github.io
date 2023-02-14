@@ -4,15 +4,40 @@ const usersList = document.getElementById("users__list");
 let pagination = document.querySelector("#pagination");
 
 let activePage,
-  amountElements = [],
   activeAmount,
+  amountItems = [],
   paginationItems = [],
   users = [],
   notesOnPage = 10,
   countOfItems = 0;
 
-//по url делаем запрос, приводим ответ к формату json, затем ответ обрабатывается функцией renderItems
+//данной функцией для объектов выбора количества элементов в списке добавляем обработчик события при нажатии -
+//вызывается функция смены стиля активной кнопки и перерендер спсика
+const setActiveAmount = () => {
+  var objects = document.getElementsByClassName("display");
+  for (var obj of objects) {
+    amountItems.push(obj);
+  }
+  amountItems.map((item) => {
+    item.classList.contains("active") && (activeAmount = item);
+    item.addEventListener("click", () => {
+      displayPage(item);
+    });
+  });
+};
 
+const displayPage = (item) => {
+  activeAmount && activeAmount.classList.remove("active");
+
+  activeAmount = item;
+
+  item.classList.add("active");
+
+  notesOnPage = item.innerHTML; //считываем количество элементов списка
+  renderItems(users); //отрисовываем с новыми параметрами
+};
+
+//по url делаем запрос, приводим ответ к формату json, затем ответ обрабатывается функцией renderItems
 const fetchData = async () => {
   const promise = fetch(url);
   const data = await promise;
@@ -20,39 +45,12 @@ const fetchData = async () => {
   renderItems(await data.json());
 };
 
-fetchData();
-
-//будущая функция выбора количества элементов на странице
-const setActiveAmount = () => {
-  var objects = document.getElementsByClassName("display");
-  for (var obj of objects) {
-    amountElements.push(obj);
-  }
-  amountElements.map((item) => {
-    item.classList.contains("active") && (activeAmount = item);
-    item.addEventListener("click", () => {
-      showOne(item);
-    });
-  });
-};
-setActiveAmount();
-
-const showOne = (item) => {
-  activeAmount && activeAmount.classList.remove("active");
-
-  activeAmount = item;
-
-  item.classList.add("active");
-  notesOnPage = item.innerHTML;
-  fetchData();
-};
-
 //изначальная функция, которая подсчитывает данные и вызываем функцию отрисоки номеров страниц
 const renderItems = (data) => {
   users = data;
-  //  notesOnPage = document.getElementsByClassName("display active")[0].innerHTML; //считываем количество элементов на странице
+
   countOfItems = Math.ceil(users.length / notesOnPage); //подсчитываем количество страниц
-  console.log(countOfItems);
+
   sliceItems(1); //начальное отображение первой страницы
   renderPaginationItems(countOfItems);
 };
@@ -60,18 +58,23 @@ const renderItems = (data) => {
 // функция отрисовки номеров страниц, на нажатие номеров навешиваем функцию showPage
 const renderPaginationItems = (countOfItems) => {
   pagination.innerHTML = "";
+
+  //если все элементы помещаются на одну страницу - не отрисовываем
   if (countOfItems === 1) {
     document.getElementsByClassName("pagination__container")[0].style.display =
       "none";
     return;
   }
-  //если все элементы помещаются на одну страницу - не отрисовываем
+
   document.getElementsByClassName("pagination__container")[0].style.display =
     "flex";
+
   for (let i = 1; i <= countOfItems; i++) {
     let li = document.createElement("li");
+
     i === 1 && li.classList.add("active"); // по умолчанию - первая страница активна
-    i === 1 && (active = li);
+    i === 1 && (activePage = li); //присваиваем переменной активный элемент
+
     li.innerHTML = i;
     pagination.appendChild(li);
     paginationItems.push(li);
@@ -86,9 +89,9 @@ const renderPaginationItems = (countOfItems) => {
 
 //меняем активный номер страницы и вызываем функцию подсчета и отрисовки элементов
 const showPage = (item) => {
-  active && active.classList.remove("active");
+  activePage && activePage.classList.remove("active");
 
-  active = item;
+  activePage = item;
 
   item.classList.add("active");
 
@@ -101,7 +104,7 @@ const sliceItems = (pageNum) => {
   let end = Number(start) + Number(notesOnPage);
   let usersSlice = users.slice(start, end);
   usersList.innerHTML = "";
-  console.log(usersSlice);
+
   renderListItems(usersSlice);
 };
 
@@ -188,3 +191,6 @@ const addPopupInfo = (user, li) => {
 
   li.appendChild(span);
 };
+
+fetchData();
+setActiveAmount();
