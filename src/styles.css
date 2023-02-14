@@ -127,8 +127,15 @@
   border-radius: 8px;
   background-color: #2b3849;
 }
+.main__container .sort__container span.disable {
+  display: none;
+}
 .main__container .sort__container span:hover, .main__container .sort__container span.active {
   cursor: pointer;
   background-color: #38495f;
   border: 1px solid #f472b6;
+}
+.main__container .sort__container span:last-child {
+  background-color: #f793c7;
+  color: #2b3849;
 }/*# sourceMappingURL=styles.css.map */

@@ -5,6 +5,7 @@ let pagination = document.querySelector("#pagination");
 
 let activePage,
   activeAmount,
+  activeSort,
   amountItems = [],
   paginationItems = [],
   sortItems = [],
@@ -201,12 +202,26 @@ const setActiveSort = () => {
   }
   sortItems[0].addEventListener("click", () => {
     sortArrayByName(usersSlice);
+    sortItems[0].classList.add("active");
+    activeSort && activeSort.classList.remove("active");
+
+    activeSort = sortItems[0];
+
+    sortItems[0].classList.add("active");
+    sortItems[2].classList.remove("disable");
   });
   sortItems[1].addEventListener("click", () => {
     sortArrayByEmail(usersSlice);
+    activeSort && activeSort.classList.remove("active");
+
+    activeSort = sortItems[1];
+
+    sortItems[1].classList.add("active");
+    sortItems[2].classList.remove("disable");
   });
   sortItems[2].addEventListener("click", () => {
     renderListItems(usersSlice);
+    sortItems[2].classList.add("disable");
   });
 };
 
