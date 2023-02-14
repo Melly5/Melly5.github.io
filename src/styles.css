@@ -3,14 +3,18 @@
   padding: 0;
 }
 
-.main__container {
-  height: 100vh;
-  align-items: center;
+body {
   font-family: "Tahoma", sans-serif;
   font-size: 18px;
   line-height: 25px;
   color: #ffffff;
   background-color: #111827;
+}
+
+.main__container {
+  height: auto;
+  align-items: center;
+  padding-top: 50px;
 }
 .main__container .users__container {
   width: 400px;
